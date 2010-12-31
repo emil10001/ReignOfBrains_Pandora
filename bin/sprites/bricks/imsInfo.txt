@@ -1,0 +1,22 @@
+// imsInfo.txt images
+
+// scenery images
+o house1.png
+o house2.png
+o house3.png
+o house4.png
+o house6.png
+o roof1.png
+o sidewalk1.png
+o sidewalk2.png
+o sidewalk3.png
+o sidewalk4.png
+o street1.png
+o street2.png
+o street3.png
+o street4.png
+o tree1.png
+o tree2.png
+o tree3.png
+o tree4.png
+o tree5.png

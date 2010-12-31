@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="ReignOfBrains">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="ReignOfBrains.classpath">
+        <pathelement location="bin"/>
+    </path>
+    <target name="build">
+    	<copy todir="bin/sprites">	
+    		<fileset dir="sprites" defaultexcludes="no" includes="**/*" />
+        </copy>
+        <copy todir="bin/sounds">	
+    		<fileset dir="sounds" defaultexcludes="no" includes="**/*" />
+        </copy>
+        <copy todir="bin/levels">	
+    		<fileset dir="levels" defaultexcludes="no" includes="**/*" />
+        </copy>
+    	<javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+    	            <src path="src"/>
+    	            <classpath refid="ReignOfBrains.classpath"/>
+    	        </javac>
+    	        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+    	            <src path="lwjgl"/>
+    	            <classpath refid="ReignOfBrains.classpath"/>
+    	        </javac>
+	        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+	            <src path="sprites"/>
+	            <classpath refid="ReignOfBrains.classpath"/>
+	        </javac>
+	        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+	            <src path="levels"/>
+	            <classpath refid="ReignOfBrains.classpath"/>
+	        </javac>
+	   	        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+	    	            <src path="sounds"/>
+	    	            <classpath refid="ReignOfBrains.classpath"/>
+	    	 </javac>
+		<jar destfile="ReignOfBrains.jar">
+			<zipfileset dir="bin">
+				<exclude name="**/*.java"/>
+			</zipfileset>
+			<manifest>
+				<!-- Who is building this jar? -->
+				<attribute name="Built-By" value="emil10001" />
+				<attribute name="Main-class" value="ReignOfBrains" />
+				<!-- <attribute name="Class-Path" value="bin lwjgl/native/macosx lwjgl/native/linux lwjgl/native/windows" /> -->	
+			</manifest>
+		</jar>
+   	</target>
+</project>

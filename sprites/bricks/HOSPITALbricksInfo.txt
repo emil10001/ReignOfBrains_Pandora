@@ -1,0 +1,12 @@
+AAAAAAAAAAAAAA //Sky
+aaaaaaaaaaaaaa //Roof
+kadeaaaaaadeaa //Crosses
+jacbaaaaaacbaa //Crosses
+jaaaaaaaaaaaaa //Hospital
+jaaLaaffaaLaaa //Doors
+ihhhhhgghhhhhh //Edge
+CCCSCCCCCCCCCC //Sidewalk
+BBBBBBBBBBBBBB //Street
+GGBGGBGGBGGBGG //Street
+BBTBBBBBBBBBBB //Street
+BBBBBBBBBBBBBB //Street
