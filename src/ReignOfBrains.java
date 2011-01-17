@@ -67,7 +67,7 @@ public class ReignOfBrains extends JFrame {
         content.add(startScreen);
         startScreen.init();
         startScreen.run();
-        theGame = new GameLoop(gp); 
+        
         content.remove(startScreen);
 		//gp.gamepadSetup();
                 
@@ -75,7 +75,8 @@ public class ReignOfBrains extends JFrame {
     	// run game level: send lvl1 level object to GameLoop as well?
     	// continuously test if level is over, if so end GameLoop and begin next game level
     	// if all levels completed - game over, win, calc score
-    	theGame.setBounds(0, 0, 800, 480);
+        theGame = new GameLoop(gp); 
+        theGame.setBounds(0, 0, 800, 480);
     	// Add overlay panels to top and bottom 
     	gamePanel.add(theGame);
     	//lp.add(gamePanel, BorderLayout.CENTER);

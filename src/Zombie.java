@@ -5,11 +5,11 @@ import java.security.SecureRandom;
 
 public class Zombie extends Sprite {
 
-	protected Sprite zLeft;
-	protected Sprite zRight;
-	protected Sprite zUp;
-	protected Sprite zDown;
-	protected Sprite hit;
+//	protected Sprite zLeft;
+//	protected Sprite zRight;
+//	protected Sprite zUp;
+//	protected Sprite zDown;
+//	protected Sprite hit;
 //	protected Sound brains;
 //	protected Sound brains2;
 //	protected Sound uhragh;
@@ -23,6 +23,7 @@ public class Zombie extends Sprite {
 	//public boolean loaded;
 	public long deadTime;
 	public Rectangle2D visBox;
+	private int whichOne=0;
 	
 	public Zombie(){
 		super();
@@ -35,96 +36,94 @@ public class Zombie extends Sprite {
 		setX(0);
 		setY(0);
 		visBox = new Rectangle2D.Double(this.getX(), this.getY(),100, 100);
-		loadImages();
-	}
-	
-	public void unload(){
-		zLeft.clear();
-		zRight.clear();
-		zUp.clear();
-		zDown.clear();
-		hit.clear();
-		this.clear();
-	}
-	
-	@Override
-	public synchronized void loadImages(){
-		zLeft = new Sprite();
-		zRight = new Sprite();
-		zUp = new Sprite();
-		zDown = new Sprite();
-		hit = new Sprite();
 		SecureRandom rnd = null;
 		try {
 			rnd = SecureRandom.getInstance("SHA1PRNG");
+			whichOne = rnd.nextInt(2);
 		} catch (NoSuchAlgorithmException e1) {
 			e1.printStackTrace();
 		}
-		switch (rnd.nextInt(2)){
+		this.zLeft();
+	}
+	
+	public void unload(){
+		this.clear();
+	}
+
+	private void zLeft(){
+		this.clearScenes();
+		switch (whichOne){
 		case 0:
-			try {
-				zLeft.addScene("sprites/zombie/1/left1.png", step1);
-				zLeft.addScene("sprites/zombie/1/left2.png", step2);
-				
-				zRight.addScene("sprites/zombie/1/right1.png", step1);
-				zRight.addScene("sprites/zombie/1/right2.png", step2);
-				
-				zDown.addScene("sprites/zombie/1/down1.png", step1);
-				zDown.addScene("sprites/zombie/1/down2.png", step2);
-				zDown.addScene("sprites/zombie/1/down3.png", step1);
-				zDown.addScene("sprites/zombie/1/down4.png", step2);
-				
-				zUp.addScene("sprites/zombie/1/up1.png", step1);
-				zUp.addScene("sprites/zombie/1/up2.png", step2);
-				zUp.addScene("sprites/zombie/1/up3.png", step1);
-				zUp.addScene("sprites/zombie/1/up4.png", step2);
-						
-				hit.addScene("sprites/zombie/1/hit.png", step1/2);
-				hit.addScene("sprites/zombie/1/hit2.png", step1/2);
-				//System.out.println("Zombie1 loaded");
-			} catch (Exception ex){
-				System.out.println("Couldn't load a zombie image");
-			}
+			this.addScene("sprites/zombie/1/left1.png", step1);
+			this.addScene("sprites/zombie/1/left2.png", step2);
 			break;
 		case 1:
-			try {
-				zLeft.addScene("sprites/zombie/2/left1.png", step1);
-				zLeft.addScene("sprites/zombie/2/left2.png", step2);
-				
-				zRight.addScene("sprites/zombie/2/right1.png", step1);
-				zRight.addScene("sprites/zombie/2/right2.png", step2);
-				
-				zDown.addScene("sprites/zombie/2/down1.png", step1);
-				zDown.addScene("sprites/zombie/2/down2.png", step2);
-				zDown.addScene("sprites/zombie/2/down3.png", step1);
-				zDown.addScene("sprites/zombie/2/down4.png", step2);
-				
-				zUp.addScene("sprites/zombie/2/up1.png", step1);
-				zUp.addScene("sprites/zombie/2/up2.png", step2);
-				zUp.addScene("sprites/zombie/2/up3.png", step1);
-				zUp.addScene("sprites/zombie/2/up4.png", step2);
-						
-				hit.addScene("sprites/zombie/2/hit.png", step1/2);
-				hit.addScene("sprites/zombie/2/hit2.png", step1/2);	
-				//System.out.println("Zombie2 loaded");
-			} catch (Exception ex){
-				System.out.println("Couldn't load a zombie image");
-				
-			}
-			break;
-		case 2:
-			System.out.println("There is no case 2");
+			this.addScene("sprites/zombie/2/left1.png", step1);
+			this.addScene("sprites/zombie/2/left2.png", step2);
 			break;
 		}
-		
-		
-//		brains = new Sound("sounds/brains.wav");
-//		brains2 = new Sound("sounds/reign-brains.wav");
-//		uhragh = new Sound("sounds/uhragh.wav");
-	
-		//this.loaded = true;
-		this.copy(zDown);
 	}
+	private void zRight(){
+		this.clearScenes();
+		switch (whichOne){
+		case 0:
+			this.addScene("sprites/zombie/1/right1.png", step1);
+			this.addScene("sprites/zombie/1/right2.png", step2);
+			break;
+		case 1:
+			this.addScene("sprites/zombie/2/right1.png", step1);
+			this.addScene("sprites/zombie/2/right2.png", step2);
+			break;
+		}
+	}
+	private void zUp(){
+		this.clearScenes();
+		switch (whichOne){
+		case 0:
+			this.addScene("sprites/zombie/1/up1.png", step1);
+			this.addScene("sprites/zombie/1/up2.png", step2);
+			this.addScene("sprites/zombie/1/up3.png", step1);
+			this.addScene("sprites/zombie/1/up4.png", step2);
+			break;
+		case 1:
+			this.addScene("sprites/zombie/2/up1.png", step1);
+			this.addScene("sprites/zombie/2/up2.png", step2);
+			this.addScene("sprites/zombie/2/up3.png", step1);
+			this.addScene("sprites/zombie/2/up4.png", step2);
+			break;
+		}
+	}
+	private void zDown(){
+		this.clearScenes();
+		switch (whichOne){
+		case 0:
+			this.addScene("sprites/zombie/1/down1.png", step1);
+			this.addScene("sprites/zombie/1/down2.png", step2);
+			this.addScene("sprites/zombie/1/down3.png", step1);
+			this.addScene("sprites/zombie/1/down4.png", step2);
+			break;
+		case 1:
+			this.addScene("sprites/zombie/2/down1.png", step1);
+			this.addScene("sprites/zombie/2/down2.png", step2);
+			this.addScene("sprites/zombie/2/down3.png", step1);
+			this.addScene("sprites/zombie/2/down4.png", step2);
+			break;
+		}
+	}
+	private void hit(){
+		this.clearScenes();
+		switch (whichOne){
+		case 0:
+			this.addScene("sprites/zombie/1/hit.png", step1/2);
+			this.addScene("sprites/zombie/1/hit2.png", step1/2);
+			break;
+		case 1:
+			this.addScene("sprites/zombie/2/hit.png", step1/2);
+			this.addScene("sprites/zombie/2/hit2.png", step1/2);	
+			break;
+		}
+	}
+	
 		
 	public void dead(long timePassed){
 		deadTime += timePassed;
@@ -140,7 +139,7 @@ public class Zombie extends Sprite {
 			deadTime = 0;
 			isHit = false;
 			visible = false;
-			this.copy(zLeft);
+			this.zLeft();
 		}
 	}
 	
@@ -244,19 +243,19 @@ public class Zombie extends Sprite {
 		if (directionChanged() && this.visible){
 			switch (direction){
 			case 0:
-				this.copy(zUp);
+				this.zUp();
 				break;
 			case 1:
-				this.copy(zLeft);
+				this.zLeft();
 				break;
 			case 2:
-				this.copy(zRight);
+				this.zRight();
 				break;
 			case 3:
-				this.copy(zDown);
+				this.zDown();
 				break;
 			case 4:
-				this.copy(hit);
+				this.hit();
 				break;
 			}
 		}

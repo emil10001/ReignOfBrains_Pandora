@@ -1,4 +1,5 @@
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 public class Ming extends Sprite{
 	
@@ -19,49 +20,80 @@ public class Ming extends Sprite{
 	public boolean run;
 	private boolean attacked;
 	protected boolean attack;
-	protected Sprite hit;
-	protected Sprite leftA;
-	protected Sprite rightA;
-	protected Sprite leftG;
-	protected Sprite rightG;
-	protected Sprite upA;
-	protected Sprite downA;
-	protected Sprite upG;
-	protected Sprite downG;
-	protected Sprite upLeftA;
-	protected Sprite downLeftA;
-	protected Sprite upRightA;
-	protected Sprite downRightA;
-	protected Sprite upLeftG;
-	protected Sprite downLeftG;
-	protected Sprite upRightG;
-	protected Sprite downRightG;
-	protected Sprite axeHit;
-	protected Sprite axeMiss;
-	protected Sprite fireUp;
-	protected Sprite fireDown;
-	protected Sprite fireLeft;
-	protected Sprite fireRight;	
-	protected Sprite fireUpRight;
-	protected Sprite fireDownRight;
-	protected Sprite fireDownLeft;
-	protected Sprite fireUpLeft;
-	protected Sprite leftStopA;
-	protected Sprite rightStopA;
-	protected Sprite leftStopG;
-	protected Sprite rightStopG;
-	protected Sprite upStopA;
-	protected Sprite downStopA;
-	protected Sprite upStopG;
-	protected Sprite downStopG;
-	protected Sprite upLeftStopA;
-	protected Sprite downLeftStopA;
-	protected Sprite upRightStopA;
-	protected Sprite downRightStopA;
-	protected Sprite upLeftStopG;
-	protected Sprite downLeftStopG;
-	protected Sprite upRightStopG;
-	protected Sprite downRightStopG;
+	private BufferedImage LeftAxe1;
+	private BufferedImage LeftAxe2;
+	private BufferedImage LeftAxe3;
+	private BufferedImage LeftAxe4;
+	private BufferedImage LeftGun1;
+	private BufferedImage LeftGun2;
+	private BufferedImage LeftGun3;
+	private BufferedImage LeftGun4;
+	private BufferedImage RightAxe1;
+	private BufferedImage RightAxe2;
+	private BufferedImage RightAxe3;
+	private BufferedImage RightAxe4;
+	private BufferedImage RightGun1;
+	private BufferedImage RightGun2;
+	private BufferedImage RightGun3;
+	private BufferedImage RightGun4;
+	private BufferedImage BackAxe1;
+	private BufferedImage BackAxe2;
+	private BufferedImage BackAxe3;
+	private BufferedImage BackAxe4;
+	private BufferedImage BackGun1;
+	private BufferedImage BackGun2;
+	private BufferedImage BackGun3;
+	private BufferedImage BackGun4;
+	private BufferedImage FrontAxe1;
+	private BufferedImage FrontAxe2;
+	private BufferedImage FrontAxe3;
+	private BufferedImage FrontAxe4;
+	private BufferedImage FrontGun1;
+	private BufferedImage FrontGun2;
+	private BufferedImage FrontGun3;
+	private BufferedImage FrontGun4;
+	private BufferedImage AxeAttack2;
+	private BufferedImage AxeAttack1;
+	private BufferedImage LeftFire;
+	private BufferedImage RightFire;
+	private BufferedImage BackFire;
+	private BufferedImage FrontFire;
+	private BufferedImage upRightFire;
+	private BufferedImage downRightFire;
+	private BufferedImage downLeftFire;
+	private BufferedImage upLeftFire;
+	private BufferedImage upLeftA1;
+	private BufferedImage upLeftA2;
+	private BufferedImage upLeftA3;
+	private BufferedImage upLeftA4;
+	private BufferedImage downLeftA1;
+	private BufferedImage downLeftA2;
+	private BufferedImage downLeftA3;
+	private BufferedImage downLeftA4;
+	private BufferedImage upRightA1;
+	private BufferedImage upRightA2;
+	private BufferedImage upRightA3;
+	private BufferedImage upRightA4;
+	private BufferedImage downRightA1;
+	private BufferedImage downRightA2;
+	private BufferedImage downRightA3;
+	private BufferedImage downRightA4;
+	private BufferedImage upLeftG1;
+	private BufferedImage upLeftG2;
+	private BufferedImage upLeftG3;
+	private BufferedImage upLeftG4;
+	private BufferedImage downLeftG1;
+	private BufferedImage downLeftG2;
+	private BufferedImage downLeftG3;
+	private BufferedImage downLeftG4;
+	private BufferedImage upRightG1;
+	private BufferedImage upRightG2;
+	private BufferedImage upRightG3;
+	private BufferedImage upRightG4;
+	private BufferedImage downRightG1;
+	private BufferedImage downRightG2;
+	private BufferedImage downRightG3;
+	private BufferedImage downRightG4;
 	public boolean moving;
 	private boolean oldMoving;
 	public boolean up;
@@ -70,10 +102,6 @@ public class Ming extends Sprite{
 	public boolean right;
 	public int stepTime;
 	protected Ribbon rb;
-	protected Sound pain;
-	protected Sound death;
-	protected Sound bite;
-	protected Sound axeSwing;
 	private long attackTime;
 	private boolean attackChange;
 	
@@ -86,7 +114,7 @@ public class Ming extends Sprite{
 		this.sandwiches = 0;
 		this.battery = 50;
 		this.healthPack = 0;
-		this.loadImages();
+//		this.loadImages();
 		action = false;
 		changed = false;
 		up = false;
@@ -99,20 +127,26 @@ public class Ming extends Sprite{
 		attacked = false;
 		attackChange = false;
 		rb = rib;
-		pain = new Sound("sounds/reign-mingpain.wav");
-		death = new Sound("sounds/reign-mingdeath.wav");
-		bite = new Sound("sounds/reign-bite.wav");
-		axeSwing = new Sound("sounds/reign-axe.wav");
-		this.copy(downG);
+		FrontGun1 = genBufferedImage("sprites/ming/FrontGun1.png");
+		FrontGun2 = genBufferedImage("sprites/ming/FrontGun2.png");
+		FrontGun3 = genBufferedImage("sprites/ming/FrontGun3.png");
+		FrontGun4 = genBufferedImage("sprites/ming/FrontGun4.png");
+		this.downG();
 		this.setX(0);
 		this.setY(0);
 		this.visible = true;
 		this.direction = 4;
-//		this.oldDirection = this.direction;
 		this.gun = true;
 		this.oldGun = this.gun;
 		this.oldMoving = false;
 		isDead = false;
+		this.hitBox = new Rectangle2D.Double(this.getX()+20, this.getY(), this.getWidth()-40, this.getHeight()/2);
+		new Thread( 
+		  new Runnable(){
+			  public void run() {
+				  loadImages();
+			  }
+		  }).start();
 	}
 
 	
@@ -157,185 +191,319 @@ public class Ming extends Sprite{
 		this.hitBox.setRect(this.getX()+30, this.getY(),this.getWidth()-60, this.getHeight()/2);
 	}
 
+	private void leftA(){
+		this.clearScenes();
+		this.addScene(LeftAxe1, stepTime);
+		this.addScene(LeftAxe2, stepTime);
+		this.addScene(LeftAxe3, stepTime);
+		this.addScene(LeftAxe4, stepTime);
+	}
+	
+	public void leftStopA(){
+		this.clearScenes();
+		this.addScene(LeftAxe1, stepTime);
+	}
+	
+	private void leftG(){
+		this.clearScenes();
+		this.addScene(LeftGun1, stepTime);
+		this.addScene(LeftGun2, stepTime);
+		this.addScene(LeftGun3, stepTime);
+		this.addScene(LeftGun4, stepTime);
+	}
+	
+	private void leftStopG(){
+		this.clearScenes();
+		this.addScene(LeftGun1, stepTime);
+	}
+	
+	private void rightA(){
+		this.clearScenes();
+		this.addScene(RightAxe1, stepTime);
+		this.addScene(RightAxe2, stepTime);
+		this.addScene(RightAxe3, stepTime);
+		this.addScene(RightAxe4, stepTime);
+	}
+	
+	private void rightStopA(){
+		this.clearScenes();
+		this.addScene(RightAxe1, stepTime);
+	}
+	
+	private void rightG(){
+		this.clearScenes();
+		this.addScene(RightGun1, stepTime);
+		this.addScene(RightGun2, stepTime);
+		this.addScene(RightGun3, stepTime);
+		this.addScene(RightGun4, stepTime);
+	}
+	
+	private void rightStopG(){
+		this.clearScenes();
+		this.addScene(RightGun1, stepTime);
+	}
+	
+	private void upA(){
+		this.clearScenes();
+		this.addScene(BackAxe1, stepTime);
+		this.addScene(BackAxe2, stepTime);
+		this.addScene(BackAxe3, stepTime);
+		this.addScene(BackAxe4, stepTime);
+	}
+
+	private void upStopA(){
+		this.clearScenes();
+		this.addScene(BackAxe1, stepTime);
+	}
+	
+	private void upG(){
+		this.clearScenes();
+		this.addScene(BackGun1, stepTime);
+		this.addScene(BackGun2, stepTime);
+		this.addScene(BackGun3, stepTime);
+		this.addScene(BackGun4, stepTime);
+	}
+	
+	private void upStopG(){
+		this.clearScenes();
+		this.addScene(BackGun1, stepTime);
+	}
+	
+	private void downA(){
+		this.clearScenes();
+		this.addScene(FrontAxe1, stepTime);
+		this.addScene(FrontAxe2, stepTime);
+		this.addScene(FrontAxe3, stepTime);
+		this.addScene(FrontAxe4, stepTime);
+	}
+	
+	private void downStopA(){
+		this.clearScenes();
+		this.addScene(FrontAxe1, stepTime);
+	}
+	private void downG(){
+		this.clearScenes();
+		this.addScene(FrontGun1, stepTime);
+		this.addScene(FrontGun2, stepTime);
+		this.addScene(FrontGun3, stepTime);
+		this.addScene(FrontGun4, stepTime);
+	}
+	private void downStopG(){
+		this.clearScenes();
+		this.addScene(FrontGun1, stepTime);
+	}
+	private void axeHit(){
+		this.clearScenes();
+		this.addScene(AxeAttack2, stepTime/2);
+	}
+	private void axeMiss(){
+		this.clearScenes();
+		this.addScene(AxeAttack1, stepTime);
+	}
+	private void fireLeft(){
+		this.clearScenes();
+		this.addScene(LeftFire, stepTime);
+		this.addScene(LeftFire, stepTime);
+	}
+	private void fireRight(){
+		this.clearScenes();
+		this.addScene(RightFire, stepTime);
+		this.addScene(RightFire, stepTime);
+	}
+	private void fireUp(){
+		this.clearScenes();
+		this.addScene(BackFire, stepTime);
+	}
+	private void fireDown(){
+		this.clearScenes();
+		this.addScene(FrontFire, stepTime);
+	}
+	private void fireUpRight(){
+		this.clearScenes();
+		this.addScene(upRightFire, stepTime);
+	}
+	private void fireDownRight(){
+		this.clearScenes();
+		this.addScene(downRightFire, stepTime);
+	}
+	private void fireDownLeft(){
+		this.clearScenes();
+		this.addScene(downLeftFire, stepTime);
+		this.addScene(downLeftFire, stepTime);
+	}
+	private void fireUpLeft(){
+		this.clearScenes();
+		this.addScene(upLeftFire, stepTime);
+	}
+
+	private void upLeftA(){
+		this.clearScenes();
+		this.addScene(upLeftA1, stepTime);
+		this.addScene(upLeftA2, stepTime);
+		this.addScene(upLeftA3, stepTime);
+		this.addScene(upLeftA4, stepTime);
+	}
+	private void upLeftStopA(){
+		this.clearScenes();
+		this.addScene(upLeftA1, stepTime);
+	}
+	private void downLeftA(){
+		this.clearScenes();
+		this.addScene(downLeftA1, stepTime);
+		this.addScene(downLeftA2, stepTime);
+		this.addScene(downLeftA3, stepTime);
+		this.addScene(downLeftA4, stepTime);
+	}
+	private void downLeftStopA(){
+		this.clearScenes();
+		this.addScene(downLeftA1, stepTime);
+	}
+	private void upRightA(){
+		this.clearScenes();
+		this.addScene(upRightA1, stepTime);
+		this.addScene(upRightA2, stepTime);
+		this.addScene(upRightA3, stepTime);
+		this.addScene(upRightA4, stepTime);
+	}
+	private void upRightStopA(){
+		this.clearScenes();
+		this.addScene(upRightA1, stepTime);
+	}
+	private void downRightA(){
+		this.clearScenes();
+		this.addScene(downRightA1, stepTime);
+		this.addScene(downRightA2, stepTime);
+		this.addScene(downRightA3, stepTime);
+		this.addScene(downRightA4, stepTime);
+	}
+	private void downRightStopA(){
+		this.clearScenes();
+		this.addScene(downRightA1, stepTime);
+	}
+	private void upLeftG(){
+		this.clearScenes();
+		this.addScene(upLeftG1, stepTime);
+		this.addScene(upLeftG2, stepTime);
+		this.addScene(upLeftG3, stepTime);
+		this.addScene(upLeftG4, stepTime);
+	}
+	private void upLeftStopG(){
+		this.clearScenes();
+		this.addScene(upLeftG1, stepTime);
+	}
+	private void downLeftG(){
+		this.clearScenes();
+		this.addScene(downLeftG1, stepTime);
+		this.addScene(downLeftG2, stepTime);
+		this.addScene(downLeftG3, stepTime);
+		this.addScene(downLeftG4, stepTime);
+	}
+	private void downLeftStopG(){
+		this.clearScenes();
+		this.addScene(downLeftG1, stepTime);
+	}
+	private void upRightG(){
+		this.clearScenes();
+		this.addScene(upRightG1, stepTime);
+		this.addScene(upRightG2, stepTime);
+		this.addScene(upRightG3, stepTime);
+		this.addScene(upRightG4, stepTime);
+	}
+	private void upRightStopG(){
+		this.clearScenes();
+		this.addScene(upRightG1, stepTime);
+	}
+	private void downRightG(){
+		this.clearScenes();
+		this.addScene(downRightG1, stepTime);
+		this.addScene(downRightG2, stepTime);
+		this.addScene(downRightG3, stepTime);
+		this.addScene(downRightG4, stepTime);
+	}
+	private void downRightStopG(){
+		this.clearScenes();
+		this.addScene(downRightG1, stepTime);
+	}
+	
+
 	@Override
-	public synchronized void loadImages(){
-		leftA = new Sprite();
-		leftG = new Sprite();
-		rightA = new Sprite();
-		rightG = new Sprite();
-		upA = new Sprite();
-		upG = new Sprite();
-		downA = new Sprite();
-		downG = new Sprite();
-		axeHit = new Sprite();
-		axeMiss = new Sprite();
-		fireLeft = new Sprite();
-		fireRight = new Sprite();
-		fireUp = new Sprite();
-		fireDown = new Sprite();
-		fireUpRight = new Sprite();
-		fireDownRight = new Sprite();
-		fireDownLeft = new Sprite();
-		fireUpLeft = new Sprite();
-		upLeftA = new Sprite();
-		downLeftA = new Sprite();
-		upRightA = new Sprite();
-		downRightA = new Sprite();
-		upLeftG = new Sprite();
-		downLeftG = new Sprite();
-		upRightG = new Sprite();
-		downRightG = new Sprite();
-		leftStopA = new Sprite();
-		leftStopG = new Sprite();
-		rightStopA = new Sprite();
-		rightStopG = new Sprite();
-		upStopA = new Sprite();
-		upStopG = new Sprite();
-		downStopA = new Sprite();
-		downStopG = new Sprite();
-		upLeftStopA = new Sprite();
-		downLeftStopA = new Sprite();
-		upRightStopA = new Sprite();
-		downRightStopA = new Sprite();
-		upLeftStopG = new Sprite();
-		downLeftStopG = new Sprite();
-		upRightStopG = new Sprite();
-		downRightStopG = new Sprite();
-		hit = new Sprite();
-		
-		try {
-			hit.addScene("sprites/ming/Hit1.png", stepTime);
-			hit.addScene("sprites/ming/Hit2.png", stepTime);
-			
-			axeHit.addScene("sprites/ming/AxeAttack2.png", stepTime/2);
-			
-			axeMiss.addScene("sprites/ming/AxeAttack1.png", stepTime);
-			
-			upLeftA.addScene("sprites/ming/upLeftA1.png", stepTime);
-			upLeftA.addScene("sprites/ming/upLeftA2.png", stepTime);
-			upLeftA.addScene("sprites/ming/upLeftA3.png", stepTime);
-			upLeftA.addScene("sprites/ming/upLeftA4.png", stepTime);
-			
-			downLeftA.addScene("sprites/ming/downLeftA1.png", stepTime);
-			downLeftA.addScene("sprites/ming/downLeftA2.png", stepTime);
-			downLeftA.addScene("sprites/ming/downLeftA3.png", stepTime);
-			downLeftA.addScene("sprites/ming/downLeftA4.png", stepTime);
-			
-			upRightA.addScene("sprites/ming/upRightA1.png", stepTime);
-			upRightA.addScene("sprites/ming/upRightA2.png", stepTime);
-			upRightA.addScene("sprites/ming/upRightA3.png", stepTime);
-			upRightA.addScene("sprites/ming/upRightA4.png", stepTime);
-			
-			downRightA.addScene("sprites/ming/downRightA1.png", stepTime);
-			downRightA.addScene("sprites/ming/downRightA2.png", stepTime);
-			downRightA.addScene("sprites/ming/downRightA3.png", stepTime);
-			downRightA.addScene("sprites/ming/downRightA4.png", stepTime);
-			
-			upLeftStopA.addScene("sprites/ming/upLeftA1.png", stepTime);
-			
-			downLeftStopA.addScene("sprites/ming/downLeftA1.png", stepTime);
-			
-			upRightStopA.addScene("sprites/ming/upRightA1.png", stepTime);
-			
-			downRightStopA.addScene("sprites/ming/downRightA1.png", stepTime);
-			
-			upLeftG.addScene("sprites/ming/upLeftG1.png", stepTime);
-			upLeftG.addScene("sprites/ming/upLeftG2.png", stepTime);
-			upLeftG.addScene("sprites/ming/upLeftG3.png", stepTime);
-			upLeftG.addScene("sprites/ming/upLeftG4.png", stepTime);
-			
-			downLeftG.addScene("sprites/ming/downLeftG1.png", stepTime);
-			downLeftG.addScene("sprites/ming/downLeftG2.png", stepTime);
-			downLeftG.addScene("sprites/ming/downLeftG3.png", stepTime);
-			downLeftG.addScene("sprites/ming/downLeftG4.png", stepTime);
-			
-			upRightG.addScene("sprites/ming/upRightG1.png", stepTime);
-			upRightG.addScene("sprites/ming/upRightG2.png", stepTime);
-			upRightG.addScene("sprites/ming/upRightG3.png", stepTime);
-			upRightG.addScene("sprites/ming/upRightG4.png", stepTime);
-			
-			downRightG.addScene("sprites/ming/downRightG1.png", stepTime);
-			downRightG.addScene("sprites/ming/downRightG2.png", stepTime);
-			downRightG.addScene("sprites/ming/downRightG3.png", stepTime);
-			downRightG.addScene("sprites/ming/downRightG4.png", stepTime);
-			
-			upLeftStopG.addScene("sprites/ming/upLeftG1.png", stepTime);
-			
-			downLeftStopG.addScene("sprites/ming/downLeftG1.png", stepTime);
-			
-			upRightStopG.addScene("sprites/ming/upRightG1.png", stepTime);
-			
-			downRightStopG.addScene("sprites/ming/downRightG1.png", stepTime);
-			
-			leftStopA.addScene("sprites/ming/LeftAxe1.png", stepTime);
-			
-			leftA.addScene("sprites/ming/LeftAxe1.png", stepTime);
-			leftA.addScene("sprites/ming/LeftAxe2.png", stepTime);
-			leftA.addScene("sprites/ming/LeftAxe3.png", stepTime);
-			leftA.addScene("sprites/ming/LeftAxe4.png", stepTime);
-	
-			rightStopA.addScene("sprites/ming/RightAxe1.png", stepTime);
-			
-			rightA.addScene("sprites/ming/RightAxe1.png", stepTime);
-			rightA.addScene("sprites/ming/RightAxe2.png", stepTime);
-			rightA.addScene("sprites/ming/RightAxe3.png", stepTime);
-			rightA.addScene("sprites/ming/RightAxe4.png", stepTime);
-			
-			leftStopG.addScene("sprites/ming/LeftGun1.png", stepTime);
-			
-			leftG.addScene("sprites/ming/LeftGun1.png", stepTime);
-			leftG.addScene("sprites/ming/LeftGun2.png", stepTime);
-			leftG.addScene("sprites/ming/LeftGun3.png", stepTime);
-			leftG.addScene("sprites/ming/LeftGun4.png", stepTime);
-	
-			rightStopG.addScene("sprites/ming/RightGun1.png", stepTime);
-			
-			rightG.addScene("sprites/ming/RightGun1.png", stepTime);
-			rightG.addScene("sprites/ming/RightGun2.png", stepTime);
-			rightG.addScene("sprites/ming/RightGun3.png", stepTime);
-			rightG.addScene("sprites/ming/RightGun4.png", stepTime);
-			
-			upStopA.addScene("sprites/ming/BackAxe1.png", stepTime);
-	
-			upA.addScene("sprites/ming/BackAxe1.png", stepTime);
-			upA.addScene("sprites/ming/BackAxe2.png", stepTime);
-			upA.addScene("sprites/ming/BackAxe3.png", stepTime);
-			upA.addScene("sprites/ming/BackAxe4.png", stepTime);
-			
-			upStopG.addScene("sprites/ming/BackGun1.png", stepTime);
-	
-			upG.addScene("sprites/ming/BackGun1.png", stepTime);
-			upG.addScene("sprites/ming/BackGun2.png", stepTime);
-			upG.addScene("sprites/ming/BackGun3.png", stepTime);
-			upG.addScene("sprites/ming/BackGun4.png", stepTime);
-			
-			downStopG.addScene("sprites/ming/FrontGun1.png", stepTime);
-	
-			downG.addScene("sprites/ming/FrontGun1.png", stepTime);
-			downG.addScene("sprites/ming/FrontGun2.png", stepTime);
-			downG.addScene("sprites/ming/FrontGun3.png", stepTime);
-			downG.addScene("sprites/ming/FrontGun4.png", stepTime);
-			
-			downStopA.addScene("sprites/ming/FrontAxe1.png", stepTime);
-	
-			downA.addScene("sprites/ming/FrontAxe1.png", stepTime);
-			downA.addScene("sprites/ming/FrontAxe2.png", stepTime);
-			downA.addScene("sprites/ming/FrontAxe3.png", stepTime);
-			downA.addScene("sprites/ming/FrontAxe4.png", stepTime);
-			
-			fireUp.addScene("sprites/ming/firing/BackFire.png", stepTime);
-			fireUpRight.addScene("sprites/ming/firing/upRightFire.png", stepTime);
-			fireRight.addScene("sprites/ming/firing/RightFire.png", stepTime);
-			fireDownRight.addScene("sprites/ming/firing/downRightFire.png", stepTime);
-			fireDown.addScene("sprites/ming/firing/FrontFire.png", stepTime);
-			fireDownLeft.addScene("sprites/ming/firing/downLeftFire.png", stepTime);
-			fireDownLeft.addScene("sprites/ming/firing/downLeftFire.png", stepTime);
-			fireLeft.addScene("sprites/ming/firing/LeftFire.png", stepTime);
-			fireLeft.addScene("sprites/ming/firing/LeftFire.png", stepTime);
-			fireUpLeft.addScene("sprites/ming/firing/upLeftFire.png", stepTime);
-			
-		} catch (Exception ex){}
-		this.hitBox = new Rectangle2D.Double(this.getX()+20, this.getY(), this.getWidth()-40, this.getHeight()/2);
+	public void loadImages(){
+		LeftAxe1 = genBufferedImage("sprites/ming/LeftAxe1.png");
+		LeftAxe2 = genBufferedImage("sprites/ming/LeftAxe2.png");
+		LeftAxe3 = genBufferedImage("sprites/ming/LeftAxe3.png");
+		LeftAxe4 = genBufferedImage("sprites/ming/LeftAxe4.png");
+		LeftGun1 = genBufferedImage("sprites/ming/LeftGun1.png");
+		LeftGun2 = genBufferedImage("sprites/ming/LeftGun2.png");
+		LeftGun3 = genBufferedImage("sprites/ming/LeftGun3.png");
+		LeftGun4 = genBufferedImage("sprites/ming/LeftGun4.png");
+		RightAxe1 = genBufferedImage("sprites/ming/RightAxe1.png");
+		RightAxe2 = genBufferedImage("sprites/ming/RightAxe2.png");
+		RightAxe3 = genBufferedImage("sprites/ming/RightAxe3.png");
+		RightAxe4 = genBufferedImage("sprites/ming/RightAxe4.png");
+		RightGun1 = genBufferedImage("sprites/ming/RightGun1.png");
+		RightGun2 = genBufferedImage("sprites/ming/RightGun2.png");
+		RightGun3 = genBufferedImage("sprites/ming/RightGun3.png");
+		RightGun4 = genBufferedImage("sprites/ming/RightGun4.png");
+		BackAxe1 = genBufferedImage("sprites/ming/BackAxe1.png");
+		BackAxe2 = genBufferedImage("sprites/ming/BackAxe2.png");
+		BackAxe3 = genBufferedImage("sprites/ming/BackAxe3.png");
+		BackAxe4 = genBufferedImage("sprites/ming/BackAxe4.png");
+		BackGun1 = genBufferedImage("sprites/ming/BackGun1.png");
+		BackGun2 = genBufferedImage("sprites/ming/BackGun2.png");
+		BackGun3 = genBufferedImage("sprites/ming/BackGun3.png");
+		BackGun4 = genBufferedImage("sprites/ming/BackGun4.png");
+		FrontAxe1 = genBufferedImage("sprites/ming/FrontAxe1.png");
+		FrontAxe2 = genBufferedImage("sprites/ming/FrontAxe2.png");
+		FrontAxe3 = genBufferedImage("sprites/ming/FrontAxe3.png");
+		FrontAxe4 = genBufferedImage("sprites/ming/FrontAxe4.png");
+		FrontGun1 = genBufferedImage("sprites/ming/FrontGun1.png");
+		FrontGun2 = genBufferedImage("sprites/ming/FrontGun2.png");
+		FrontGun3 = genBufferedImage("sprites/ming/FrontGun3.png");
+		FrontGun4 = genBufferedImage("sprites/ming/FrontGun4.png");
+		AxeAttack2 = genBufferedImage("sprites/ming/AxeAttack2.png");
+		AxeAttack1 = genBufferedImage("sprites/ming/AxeAttack1.png");
+		LeftFire = genBufferedImage("sprites/ming/firing/LeftFire.png");
+		LeftFire = genBufferedImage("sprites/ming/firing/LeftFire.png");
+		RightFire = genBufferedImage("sprites/ming/firing/RightFire.png");
+		RightFire = genBufferedImage("sprites/ming/firing/RightFire.png");
+		BackFire = genBufferedImage("sprites/ming/firing/BackFire.png");
+		FrontFire = genBufferedImage("sprites/ming/firing/FrontFire.png");
+		upRightFire = genBufferedImage("sprites/ming/firing/upRightFire.png");
+		downRightFire = genBufferedImage("sprites/ming/firing/downRightFire.png");
+		downLeftFire = genBufferedImage("sprites/ming/firing/downLeftFire.png");
+		upLeftFire = genBufferedImage("sprites/ming/firing/upLeftFire.png");
+		upLeftA1 = genBufferedImage("sprites/ming/upLeftA1.png");
+		upLeftA2 = genBufferedImage("sprites/ming/upLeftA2.png");
+		upLeftA3 = genBufferedImage("sprites/ming/upLeftA3.png");
+		upLeftA4 = genBufferedImage("sprites/ming/upLeftA4.png");
+		downLeftA1 = genBufferedImage("sprites/ming/downLeftA1.png");
+		downLeftA2 = genBufferedImage("sprites/ming/downLeftA2.png");
+		downLeftA3 = genBufferedImage("sprites/ming/downLeftA3.png");
+		downLeftA4 = genBufferedImage("sprites/ming/downLeftA4.png");
+		upRightA1 = genBufferedImage("sprites/ming/upRightA1.png");
+		upRightA2 = genBufferedImage("sprites/ming/upRightA2.png");
+		upRightA3 = genBufferedImage("sprites/ming/upRightA3.png");
+		upRightA4 = genBufferedImage("sprites/ming/upRightA4.png");
+		downRightA1 = genBufferedImage("sprites/ming/downRightA1.png");
+		downRightA2 = genBufferedImage("sprites/ming/downRightA2.png");
+		downRightA3 = genBufferedImage("sprites/ming/downRightA3.png");
+		downRightA4 = genBufferedImage("sprites/ming/downRightA4.png");
+		upLeftG1 = genBufferedImage("sprites/ming/upLeftG1.png");
+		upLeftG2 = genBufferedImage("sprites/ming/upLeftG2.png");
+		upLeftG3 = genBufferedImage("sprites/ming/upLeftG3.png");
+		upLeftG4 = genBufferedImage("sprites/ming/upLeftG4.png");
+		downLeftG1 = genBufferedImage("sprites/ming/downLeftG1.png");
+		downLeftG2 = genBufferedImage("sprites/ming/downLeftG2.png");
+		downLeftG3 = genBufferedImage("sprites/ming/downLeftG3.png");
+		downLeftG4 = genBufferedImage("sprites/ming/downLeftG4.png");
+		upRightG1 = genBufferedImage("sprites/ming/upRightG1.png");
+		upRightG2 = genBufferedImage("sprites/ming/upRightG2.png");
+		upRightG3 = genBufferedImage("sprites/ming/upRightG3.png");
+		upRightG4 = genBufferedImage("sprites/ming/upRightG4.png");
+		downRightG1 = genBufferedImage("sprites/ming/downRightG1.png");
+		downRightG2 = genBufferedImage("sprites/ming/downRightG2.png");
+		downRightG3 = genBufferedImage("sprites/ming/downRightG3.png");
+		downRightG4 = genBufferedImage("sprites/ming/downRightG4.png");
 	}
 	
 	public boolean directionChanged(){
@@ -484,22 +652,22 @@ public class Ming extends Sprite{
 		case 0:
 			if (moving){
 					if (gun){
-						this.copy(upG);
+						this.upG();
 						//System.out.println("upG");
 					
 					}
 					else {
-						this.copy(upA);
+						this.upA();
 						//System.out.println("upA");
 					}
 			}
 			else {
 					if (gun){
-						this.copy(upStopG);
+						this.upStopG();
 						//System.out.println("upStopG");
 					}
 					else {
-						this.copy(upStopA);
+						this.upStopA();
 						//System.out.println("upStopA");
 					}	
 			}	
@@ -508,21 +676,21 @@ public class Ming extends Sprite{
 		case 1:
 			if (moving){
 					if (gun){
-						this.copy(upRightG);
+						this.upRightG();
 						//System.out.println("upRightG");
 					}
 					else {
-						this.copy(upRightA);	
+						this.upRightA();	
 						//System.out.println("upRightA");
 					}
 			}
 			else {
 					if (gun){
-						this.copy(upRightStopG);
+						this.upRightStopG();
 						//System.out.println("upRightStopG");
 					}
 					else {
-						this.copy(upRightStopA);
+						this.upRightStopA();
 						//System.out.println("upRightStopA");
 					}	
 			}
@@ -531,21 +699,21 @@ public class Ming extends Sprite{
 		case 2:	
 			if (moving){
 					if (gun){
-						this.copy(rightG);
+						this.rightG();
 						//System.out.println("rightG");		
 						}
 					else {
-						this.copy(rightA);
+						this.rightA();
 						//System.out.println("rightA");
 					}
 			}
 			else {
 					if (gun){
-						this.copy(rightStopG);
+						this.rightStopG();
 						//System.out.println("rightStopG");
 					}
 					else {
-						this.copy(rightStopA);
+						this.rightStopA();
 						//System.out.println("rightStopA");
 					}
 			}
@@ -554,21 +722,21 @@ public class Ming extends Sprite{
 		case 3:
 			if (moving){
 					if (gun){
-						this.copy(downRightG);
+						this.downRightG();
 						//System.out.println("downRightG");
 					}
 					else {
-						this.copy(downRightA);
+						this.downRightA();
 						//System.out.println("downRightA");
 					}
 			}
 			else {
 					if (gun){
-						this.copy(downRightStopG);
+						this.downRightStopG();
 						//System.out.println("downRightStopG");
 					}
 					else {
-						this.copy(downRightStopA);
+						this.downRightStopA();
 						//System.out.println("downRightStopA");
 					}	
 			}
@@ -577,21 +745,21 @@ public class Ming extends Sprite{
 		case 4:
 			if (moving){
 					if (gun){
-						this.copy(downG);
+						this.downG();
 						//System.out.println("downG");
 					}
 					else {
-						this.copy(downA);
+						this.downA();
 						//System.out.println("downA");
 					}
 			}
 			else {
 					if (gun){
-						this.copy(downStopG);
+						this.downStopG();
 						//System.out.println("downStopG");
 					}
 					else {
-						this.copy(downStopA);
+						this.downStopA();
 						//System.out.println("downStopA");
 					}	
 			}
@@ -600,21 +768,21 @@ public class Ming extends Sprite{
 		case 5:
 			if (moving){
 					if (gun){
-						this.copy(downLeftG);
+						this.downLeftG();
 						//System.out.println("downLeftG");
 					}
 					else {
-						this.copy(downLeftA);
+						this.downLeftA();
 						//System.out.println("downLeftA");
 					}
 			}
 			else {
 					if (gun){
-						this.copy(downLeftStopG);
+						this.downLeftStopG();
 						//System.out.println("downLeftStopG");
 					}
 					else {
-						this.copy(downLeftStopA);
+						this.downLeftStopA();
 						//System.out.println("downLeftStopA");
 					}	
 			}
@@ -623,21 +791,21 @@ public class Ming extends Sprite{
 		case 6:
 			if (moving){
 					if (gun){
-						this.copy(leftG);
+						this.leftG();
 						//System.out.println("leftG");
 					}
 					else {
-						this.copy(leftA);
+						this.leftA();
 						//System.out.println("leftA");
 					}
 			}
 			else {
 					if (gun){
-						this.copy(leftStopG);
+						this.leftStopG();
 						//System.out.println("leftStopG");
 					}
 					else {
-						this.copy(leftStopA);
+						this.leftStopA();
 						//System.out.println("leftStopA");
 					}
 			}
@@ -646,21 +814,21 @@ public class Ming extends Sprite{
 		case 7:
 			if (moving){
 					if (gun){
-						this.copy(upLeftG);
+						this.upLeftG();
 						//System.out.println("upLeftG");
 					}
 					else {
-						this.copy(upLeftA);
+						this.upLeftA();
 						//System.out.println("upLeftA");
 					}	
 			}
 			else {
 					if (gun){
-						this.copy(upLeftStopG);
+						this.upLeftStopG();
 						//System.out.println("upLeftStopG");
 					}
 					else {
-						this.copy(upLeftStopA);
+						this.upLeftStopA();
 						//System.out.println("upLeftStopA");
 					}
 			}
@@ -786,31 +954,31 @@ public class Ming extends Sprite{
 			
 			switch(direction){
 			case 0:
-				this.copy(fireUp);
+				this.fireUp();
 				break;
 			case 1:
-				this.copy(fireUpRight);
+				this.fireUpRight();
 				break;
 			case 2:
-				this.copy(fireRight);
+				this.fireRight();
 				break;
 			case 3:
-				this.copy(fireDownRight);	
+				this.fireDownRight();	
 				break;
 			case 4:
-				this.copy(fireDown);
+				this.fireDown();
 				break;
 			case 5:
 				//System.out.println("fireDownLeft");
-				this.copy(fireDownLeft);
+				this.fireDownLeft();
 				break;
 			case 6:
 				//System.out.println("fireLeft");
-				this.copy(fireLeft);
+				this.fireLeft();
 				break;
 			case 7:
 				//System.out.println("fireUpLeft");
-				this.copy(fireUpLeft);	
+				this.fireUpLeft();	
 				break;
 			}
 		}	
@@ -827,22 +995,19 @@ public class Ming extends Sprite{
 	
 	public boolean axeHit(Zombie z) {
 		//attack = true;
-		if (!axeSwing.running()){
-			//System.out.println("axeSwing");
-			axeSwing.start();
-		}
+		
 		try {
 			Rectangle2D attackBox = new Rectangle2D.Double(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 
 			//if (this.getX()-10 <= (z.getX()+z.getWidth()) && (this.getX()+this.getWidth()+10) >= z.getX() && (this.getY()+this.getHeight()+10) >= z.getY() && this.getY()-10 <= (z.getY()+30) && z.visible){
 			if (z.visible && !z.isHit && attackBox.intersects(z.hitBox)){
 				direction = 4;
-				this.copy(axeHit);
+				this.axeHit();
 				return true;
 			}
 			else { 
 				direction = 4;
-				this.copy(axeMiss);
+				this.axeMiss();
 				return false;
 			}
 		} catch (Exception ex){
@@ -856,28 +1021,28 @@ public class Ming extends Sprite{
 			gun=false;
 			switch(direction){
 				case 0:
-					this.copy(upA);
+					this.upA();
 					break;
 				case 1:
-					this.copy(upRightA);
+					this.upRightA();
 					break;
 				case 2:
-					this.copy(rightA);
+					this.rightA();
 					break;
 				case 3:
-					this.copy(downRightA);	
+					this.downRightA();	
 					break;
 				case 4:
-					this.copy(downA);
+					this.downA();
 					break;
 				case 5:
-					this.copy(downLeftA);
+					this.downLeftA();
 					break;
 				case 6:
-					this.copy(leftA);
+					this.leftA();
 					break;
 				case 7:
-					this.copy(upLeftA);	
+					this.upLeftA();	
 					break;
 			}
 		}
@@ -885,28 +1050,28 @@ public class Ming extends Sprite{
 			gun=true;
 			switch(direction){
 			case 0:
-				this.copy(upG);
+				this.upG();
 				break;
 			case 1:
-				this.copy(upRightG);
+				this.upRightG();
 				break;
 			case 2:
-				this.copy(rightG);
+				this.rightG();
 				break;
 			case 3:
-				this.copy(downRightG);	
+				this.downRightG();	
 				break;
 			case 4:
-				this.copy(downG);
+				this.downG();
 				break;
 			case 5:
-				this.copy(downLeftG);
+				this.downLeftG();
 				break;
 			case 6:
-				this.copy(leftG);
+				this.leftG();
 				break;
 			case 7:
-				this.copy(upLeftG);	
+				this.upLeftG();	
 				break;
 			}
 		}
@@ -928,19 +1093,10 @@ public class Ming extends Sprite{
 	
 	public void hit() {
 		direction = 4;
-		if (health%2 ==0){
-			if (!bite.running()){
-				//System.out.println("bite");
-				bite.start();
-			}
-		}
-		else{
-			if (!pain.running()){
-				//System.out.println("pain");
-				pain.start();
-			}
-		}
-		this.copy(hit);
+		
+		this.clearScenes();
+		this.addScene("sprites/ming/Hit1.png", stepTime);
+		this.addScene("sprites/ming/Hit2.png", stepTime);
 		//this.health -= 25;
 		this.health--;
 		if (health <= 0){

@@ -75,30 +75,27 @@ public class GameLoop extends Canvas implements KeyListener,MouseMotionListener 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("GameLoop.GameLoop() finished " + System.currentTimeMillis());
 	}
 	
 	public void init()
 	{
 		this.createBufferStrategy(2);
 		strategy = getBufferStrategy();
+		System.out.println("GameLoop.init() finished " + System.currentTimeMillis());
+		loadScreen();
 	}
 	
 	private BufferedImage genBufferedImage(String si){
 		BufferedImage i;
 		try {
-			// The ClassLoader.getResource() ensures we get the sprite
-			// from the appropriate place, this helps with deploying the game
-			// with things like webstart. You could equally do a file look
-			// up here.
 			URL url = this.getClass().getClassLoader().getResource(si);
 			
 			if (url == null) {
 				System.out.println("Can't find ref: "+si);
 			}
 			
-			// use ImageIO to read the image in
 			i = ImageIO.read(url);
-			//System.out.println("add scene totalTime = " + totalTime);
 			return i;
 		} catch (IOException e) {
 			System.out.println("Failed to load: "+si);
@@ -108,6 +105,7 @@ public class GameLoop extends Canvas implements KeyListener,MouseMotionListener 
 	}
 	
 	public void loadImages() throws IOException{
+		System.out.println("GameLoop.loadImages() start " + System.currentTimeMillis());
 		menu = genBufferedImage("sprites/bg2.png");
 		load = genBufferedImage("sprites/bg2.png");
 		bulletP = genBufferedImage("sprites/panel/ammo.gif");
@@ -116,7 +114,7 @@ public class GameLoop extends Canvas implements KeyListener,MouseMotionListener 
 		sandwichP = genBufferedImage("sprites/panel/sandwich.png");
 		batteryP = genBufferedImage("sprites/panel/battery.png");
 		radioP = genBufferedImage("sprites/panel/radio1.gif");
-		
+		System.out.println("GameLoop.loadImages() zombies " + System.currentTimeMillis());
 		zombie = new Zombie[this.ZOMBIES];
 		SecureRandom rnd = null;
 		try {
@@ -130,7 +128,7 @@ public class GameLoop extends Canvas implements KeyListener,MouseMotionListener 
 			zombie[i].setX(rnd.nextInt(800)+800);
 			zombie[i].setY(rnd.nextInt(HEIGHT*3/2)+300);
 		}
-			
+		System.out.println("GameLoop.loadImages() ming " + System.currentTimeMillis());	
 		ming = new Ming(rb);
 		ming.setDirectionFacing(2);
 		ming.gun=true;
@@ -145,7 +143,7 @@ public class GameLoop extends Canvas implements KeyListener,MouseMotionListener 
 			bullet[i].setY(0);
 			bullet[i].visible = false;
 		}
-	
+		System.out.println("GameLoop.loadImages() finished " + System.currentTimeMillis());
 //		gunshot = new Sound("sounds/reign-gunshot.wav");
 //		reload = new Sound("sounds/reign-reload.wav");
 	}
@@ -228,8 +226,12 @@ public class GameLoop extends Canvas implements KeyListener,MouseMotionListener 
 		long cumTime = startTime;
 		paused = false;	
 		//level.startMusic();
+		loadScreen();
 		while (!running){
-			try {Thread.sleep(20);} catch (Exception ex){}
+			try {
+				loadScreen();
+				Thread.sleep(20);
+			} catch (Exception ex){}
 		}
 		while (running){
 			//gp.gamepadPressed();

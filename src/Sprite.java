@@ -180,6 +180,24 @@ public class Sprite {
 		}
 
 	}
+
+	protected BufferedImage genBufferedImage(String si){
+		BufferedImage i;
+		try {
+			URL url = this.getClass().getClassLoader().getResource(si);
+			
+			if (url == null) {
+				System.out.println("Can't find ref: "+si);
+			}
+			
+			i = ImageIO.read(url);
+			return i;
+		} catch (IOException e) {
+			System.out.println("Failed to load: "+si);
+			return null;
+		}
+		
+	}
 	
 	public synchronized void addScene( BufferedImage i, long t){
 		totalTime += t;
